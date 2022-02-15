@@ -1,0 +1,7 @@
+
+abstract class EWB {
+  static const url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken';
+  static const corpid = 'corpid';
+  static const corpsecret = 'corpsecret-G1zlxG73rurdYpWg8';
+  static const agentid = 'agentid';
+}
