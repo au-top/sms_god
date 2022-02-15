@@ -65,7 +65,7 @@ class _IndexState extends State<Index> {
               child: Padding(
                 child: Material(
                   child: LogListView(smsLog: smsLog),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
               ),
