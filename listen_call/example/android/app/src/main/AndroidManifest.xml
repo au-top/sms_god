@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="top.autopc.listen_call_example">
-   <application
+
+
+    <application
         android:label="listen_call_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -30,5 +32,11 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <service  android:enabled="true" android:exported="true"  android:name="top.autopc.listen_call.PhoneStateListenerService" />
     </application>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
