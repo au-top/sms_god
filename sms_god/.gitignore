@@ -48,3 +48,6 @@ app.*.map.json
 
 # Code File
 /lib/config.dart
+
+
+/design/export/
