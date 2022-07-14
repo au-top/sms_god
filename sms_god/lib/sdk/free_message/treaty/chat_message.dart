@@ -1,5 +1,5 @@
+import 'package:autop_free_dart_utils/enum_make.dart';
 import 'package:sms_god/sdk/free_message/api_treaty.dart';
-import 'package:sms_god/sdk/free_message/functions/enum_make.dart';
 
 enum ChatMessageType { group, single }
 

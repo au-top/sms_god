@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-import 'package:sms_god/sdk/free_message/functions/enum_make.dart';
+import 'package:autop_free_dart_utils/enum_make.dart';
 
 enum TimeIndexDir {
   old,

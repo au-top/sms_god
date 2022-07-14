@@ -1,21 +1,36 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:sms_god/config.dart';
 
-Future<String> getToken() async {
-  final response = await Dio().get(EWB.url, queryParameters: {'corpid': EWB.corpid, 'corpsecret': EWB.corpsecret});
+Future<String> getToken({
+  required String url,
+  required String corpid,
+  required String corpsecret,
+}) async {
+  final response = await Dio().get(url, queryParameters: {'corpid': corpid, 'corpsecret': corpsecret});
   return response.data["access_token"] as String;
 }
 
-Future pushMessage(String touserValue, String pushContent) async {
+Future pushMessage(
+  String toUserValue,
+  String pushContent, {
+  required String agentid,
+  required String url,
+  required String corpid,
+  required String corpsecret,
+}) async {
   final content = {
-    "touser": touserValue,
+    "touser": toUserValue,
     "msgtype": "text",
-    "agentid": EWB.agentid,
+    "agentid": agentid,
     "text": {"content": pushContent},
     "safe": "0"
   };
-  await Dio().post("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${await getToken()}", data: jsonEncode(content));
+  await Dio().post(
+    "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${await getToken(
+      url: url,
+      corpid: corpid,
+      corpsecret: corpsecret,
+    )}",
+    data: jsonEncode(content),
+  );
 }

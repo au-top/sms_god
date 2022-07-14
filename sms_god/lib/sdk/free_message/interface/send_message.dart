@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:flutter/material.dart';
+import 'package:autop_free_dart_utils/enum_make.dart';
+import 'package:autop_free_flutter_utils/debug_mode_print.dart';
+import 'package:dio/dio.dart';
 import 'package:sms_god/sdk/free_message/api_base.dart';
 import 'package:sms_god/sdk/free_message/api_treaty.dart';
-import 'package:sms_god/sdk/free_message/config.dart';
-import 'package:sms_god/sdk/free_message/functions/enum_make.dart';
-import 'package:sms_god/sdk/free_message/request_handel.dart';
 import 'package:sms_god/sdk/free_message/treaty/chat_message.dart';
 
 class SendMessageData implements ApiModel {
@@ -114,7 +112,7 @@ class ChatMessageContent {
       final dePackage = jsonDecode(packageString);
       elems.addAll(List.from(dePackage["elems"]).map((e) => ChatMessageContentElem.fromMap(e)));
     } catch (e) {
-      print(e);
+      debugModePrint(e);
       elems.add(ChatMessageContentElem(content: "[ 该信息目前版本不支持解析 ]", type: ChatMessageContentElemType.text));
     }
   }
@@ -125,12 +123,7 @@ class ChatMessageContent {
   }
 }
 
-Future<HttpPackage<dynamic>> sendMessage(BuildContext? context, SendMessageData sendMessageData) async {
-  final dio = initBaseDio();
-
+Future<HttpPackage<dynamic>> sendMessage(Dio dio, SendMessageData sendMessageData, {required String serverHost}) async {
   final result = await dio.post("$serverHost/message/send", data: sendMessageData.toMap());
-  print(result.requestOptions.headers);
-  final _hp = HttpPackage.fromMap(result.data);
-  globalHandel(context, _hp);
-  return _hp;
+  return HttpPackage.fromMap(result.data);
 }

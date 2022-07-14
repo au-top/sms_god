@@ -1,21 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sms_god/sdk/free_message/api_base.dart';
 import 'package:sms_god/sdk/free_message/api_treaty.dart';
-import 'package:sms_god/sdk/free_message/config.dart';
 import 'package:sms_god/sdk/free_message/request_handel.dart';
 
 class SignInApiData implements ApiModel {
   String email;
   String passwd;
+  String platform;
 
-  SignInApiData({required this.email, required this.passwd});
+  SignInApiData({required this.email, required this.passwd, required this.platform});
 
   @override
   Map<String, dynamic> toMap() {
-    return {
-      "email": email,
-      "passwd": passwd,
-    };
+    return {"email": email, "passwd": passwd, "platform": platform};
   }
 }
 
@@ -31,11 +29,7 @@ class SignInApiResult {
   }
 }
 
-Future<HttpPackage> signIn(BuildContext? context, SignInApiData data) async {
-  final dio = initBaseDio();
+Future<HttpPackage> signIn(Dio dio, SignInApiData data, {required String serverHost}) async {
   final result = await dio.postUri(Uri.parse("$serverHost/user/signin"), data: data.toMap());
-  final _hp = HttpPackage.fromMap(result.data);
-  globalHandel(context, _hp);
-  _hp.printLog("signIn");
-  return _hp;
+  return HttpPackage.fromMap(result.data);
 }
