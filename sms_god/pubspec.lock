@@ -492,9 +492,9 @@ packages:
   telephony:
     dependency: "direct main"
     description:
-      path: "../telephony"
-      relative: true
-    source: path
+      name: telephony
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "0.2.0"
   term_glyph:
     dependency: transitive

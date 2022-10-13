@@ -13,8 +13,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  telephony: 
-    path: ../telephony
+  telephony: ^0.2.0
+
   dio: ^4.0.4
   cookie_jar: ^3.0.1
   dio_cookie_manager: ^2.0.0
