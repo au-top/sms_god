@@ -11,7 +11,10 @@ class AppConfig with ChangeNotifier {
   @HiveField(2)
   final FreeMessageConfig freeMessageConfig;
 
-  AppConfig({required this.weChatSdkConfig, required this.freeMessageConfig});
+  @HiveField(3, defaultValue: '')
+  String deviceName;
+
+  AppConfig({required this.deviceName, required this.weChatSdkConfig, required this.freeMessageConfig});
 
   factory AppConfig.r() {
     return Hive.box(ConfigHiveName).get(ConfigHiveSaveKey) as AppConfig? ??
@@ -31,6 +34,7 @@ class AppConfig with ChangeNotifier {
             baseUrl: '',
             enable: false,
           ),
+          deviceName: '',
         );
   }
 

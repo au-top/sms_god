@@ -1,14 +1,13 @@
 import 'package:autop_free_dart_utils/custom_base64.dart';
 import 'package:autop_free_flutter_utils/debug_mode_print.dart';
 import 'package:dio/dio.dart';
+import 'package:sms_god/model/app_config.dart';
 import 'package:sms_god/sdk/free_message/api_base.dart';
 import 'package:sms_god/sdk/free_message/interface/send_message.dart';
 import 'package:sms_god/sdk/free_message/interface/signin.dart';
 import 'package:sms_god/sdk/free_message/treaty/chat_message.dart';
 import 'package:sms_god/sdk/sdk_api.dart';
 import 'package:telephony/telephony.dart';
-
-import 'free_message/api_treaty.dart';
 
 class FreeMessageAPI extends SdkApi {
   late final String targetUUID;
@@ -27,9 +26,9 @@ class FreeMessageAPI extends SdkApi {
   });
 
   @override
-  Future onMessage(SmsMessage message) async {
+  Future onMessage(SmsMessage message, {required AppConfig appConfig}) async {
     debugModePrint(["message", message.address, message.body]);
-    await _sendMessage(message, "activation");
+    await _sendMessage(message, "activation", appConfig);
   }
 
   Future<Dio> _signInDio() async {
@@ -42,7 +41,7 @@ class FreeMessageAPI extends SdkApi {
     return dio;
   }
 
-  Future _sendMessage(SmsMessage message, String tag) async {
+  Future _sendMessage(SmsMessage message, String tag, AppConfig appConfig) async {
     final dio = await userWithDio;
     final messageBody = ChatMessageContent()
       ..elems.add(

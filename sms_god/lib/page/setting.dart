@@ -12,6 +12,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  late final smsGodDeviceName = TextEditingController(text: context.read<AppConfig>().deviceName);
   late final weChatUrlTEC = TextEditingController(text: context.read<AppConfig>().weChatSdkConfig.url);
   late final weChatCorpsecretTEC = TextEditingController(text: context.read<AppConfig>().weChatSdkConfig.corpsecret);
   late final weChatCorpidTEC = TextEditingController(text: context.read<AppConfig>().weChatSdkConfig.corpid);
@@ -42,6 +43,21 @@ class _SettingState extends State<Setting> {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
+            _buildPrimaryListTile(
+              leading: const Icon(Icons.sms),
+              title: const Text("SMSGod"),
+              primaryColor: Colors.orange,
+              contentColor: Colors.white,
+            ),
+            ListTile(
+              title: TextField(
+                decoration: const InputDecoration(label: Text("DeviceName"), isDense: true),
+                controller: smsGodDeviceName,
+                onChanged: (value) {
+                  context.read<AppConfig>().deviceName = value;
+                },
+              ),
+            ),
             _buildPrimaryListTile(
               leading: const Icon(Icons.wechat_rounded),
               title: const Text("WeChatBot"),

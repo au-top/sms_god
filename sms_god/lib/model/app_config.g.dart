@@ -17,6 +17,7 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AppConfig(
+      deviceName: fields[3] == null ? '' : fields[3] as String,
       weChatSdkConfig: fields[1] as WeChatSdkConfig,
       freeMessageConfig: fields[2] as FreeMessageConfig,
     );
@@ -25,11 +26,13 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
   @override
   void write(BinaryWriter writer, AppConfig obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(1)
       ..write(obj.weChatSdkConfig)
       ..writeByte(2)
-      ..write(obj.freeMessageConfig);
+      ..write(obj.freeMessageConfig)
+      ..writeByte(3)
+      ..write(obj.deviceName);
   }
 
   @override
@@ -101,7 +104,7 @@ class FreeMessageConfigAdapter extends TypeAdapter<FreeMessageConfig> {
     };
     return FreeMessageConfig(
       targetUUID: fields[1] == null ? '' : fields[1] as String,
-      cpassword: fields[4] == null ? [] : (fields[4] as List).cast<String>(),
+      cpassword: fields[4] == null ? ['0'] : (fields[4] as List).cast<String>(),
       email: fields[2] == null ? '' : fields[2] as String,
       passwd: fields[3] == null ? '' : fields[3] as String,
       enable: fields[5] == null ? false : fields[5] as bool,

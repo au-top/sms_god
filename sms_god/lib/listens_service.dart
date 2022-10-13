@@ -40,22 +40,26 @@ Future initListensService({required AppConfig appConfig}) async {
 
   telephony.listenIncomingSms(
     onNewMessage: (smsMessage) {
-      debugModePrint("- onMessage");
+      // ignore: avoid_print
+      print("- onMessage");
       _onMessage(smsMessage, appConfig);
     },
     onBackgroundMessage: onBackgroundMessage,
   );
 }
 
-Future onBackgroundMessage(SmsMessage smsMessage) async {
-  debugModePrint("- onBackgroundMessage");
+@pragma('vm:entry-point')
+void onBackgroundMessage(SmsMessage smsMessage) async {
+  // ignore: avoid_print
+  print("- onBackgroundMessage");
   await initHive();
   await Hive.syncBox(ConfigHiveName);
   final data = AppConfig.r();
   _onMessage(smsMessage, data);
 }
 
-Future _onMessage(
+@pragma('vm:entry-point')
+void _onMessage(
   SmsMessage smsMessage,
   AppConfig appConfig,
 ) async {
@@ -70,7 +74,7 @@ Future _onMessage(
             passwd: appConfig.freeMessageConfig.passwd,
             cpassword: appConfig.freeMessageConfig.cpassword,
             baseUrl: appConfig.freeMessageConfig.baseUrl,
-          ).onMessage(smsMessage);
+          ).onMessage(smsMessage, appConfig: appConfig);
         }
       },
       () async {
@@ -80,7 +84,7 @@ Future _onMessage(
             corpid: appConfig.weChatSdkConfig.corpid,
             corpsecret: appConfig.weChatSdkConfig.corpsecret,
             url: appConfig.weChatSdkConfig.url,
-          ).onMessage(smsMessage);
+          ).onMessage(smsMessage, appConfig: appConfig);
         }
       }
     ]

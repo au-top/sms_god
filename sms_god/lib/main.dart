@@ -7,7 +7,6 @@ import 'package:sms_god/global_define.dart';
 import 'package:sms_god/listens_service.dart';
 import 'package:sms_god/model/app_config.dart';
 import 'package:sms_god/page/setting.dart';
-import 'package:sms_god/sdk/free_message.dart';
 import 'package:sms_god/state/local/log.dart';
 
 final smsLog = SMSLog();
@@ -51,8 +50,9 @@ class _AppBootstrapState extends State<AppBootstrap> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "SMSGOD",
       home: const Index(),
-      theme: ThemeData.light(useMaterial3: true).copyWith(
+      theme: ThemeData.light().copyWith(
         inputDecorationTheme: const InputDecorationTheme(isDense: true),
         appBarTheme: const AppBarTheme(elevation: 0),
       ),
